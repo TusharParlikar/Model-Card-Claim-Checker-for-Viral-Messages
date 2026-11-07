@@ -1,0 +1,8 @@
+.env
+.streamlit/secrets.toml
+__pycache__/
+*.docx
+
+# Submission files for the class drive, not the repo
+54_Tushar_P54.*
+report.docx
