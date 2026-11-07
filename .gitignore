@@ -6,3 +6,6 @@ __pycache__/
 # Submission files for the class drive, not the repo
 54_Tushar_P54.*
 report.docx
+
+# The demo video is shared separately, not committed
+promo/*.mp4
