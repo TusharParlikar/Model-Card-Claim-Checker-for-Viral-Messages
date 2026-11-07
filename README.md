@@ -8,7 +8,7 @@ Generative AI mini-project P54 (Track E: ethics, governance and responsible depl
 
 **Live app:** _add your Streamlit URL_  
 **Demo video:** _add your link_  
-**Demo video (2 min):** [promo/claim_checker_demo.mp4](promo/claim_checker_demo.mp4)
+**Demo video (2 min):** _add your link_
 
 ## Run it locally
 
@@ -86,7 +86,7 @@ If one source can't be reached, the check carries on with the other and says whi
 | [data/messages.json](data/messages.json) | 10 labelled messages, used for tuning |
 | [data/heldout.json](data/heldout.json) | 12 labelled claims, not used for tuning |
 | [assets/](assets) | Background illustrations |
-| [promo/](promo) | The 2-minute demo video and the scripts that render it |
+| [promo/](promo) | Scripts that render the 2-minute demo video |
 | [MODEL_CARD.md](MODEL_CARD.md) | Models, sources, limits, safety and licences |
 
 ## Syllabus coverage
@@ -184,8 +184,8 @@ the models. Repeated checks are faster because pages and feeds are cached. Rate 
 
 ## Demo video
 
-[promo/claim_checker_demo.mp4](promo/claim_checker_demo.mp4) is a 2-minute tour using real footage of the app, partly sped
-up, and says so in its credits. The narration is Kokoro text-to-speech, not a human recording. To re-render it, start the app, then:
+The 2-minute demo video is shared separately and is not stored in this repository. It uses real footage of the app,
+partly sped up, and says so in its credits. The narration is Kokoro text-to-speech, not a human recording. To re-render it, start the app, then:
 
 ```
 python promo/record.py WORK/rec SCREENSHOT.png
