@@ -6,7 +6,7 @@ the evidence. It can also produce a shareable fact-check card.
 
 Generative AI mini-project P54 (Track E: ethics, governance and responsible deployment).
 
-**Live app:** _add your Streamlit URL_  
+**Live app:** [model-card-claim-checker-for-viral-messages.streamlit.app](https://model-card-claim-checker-for-viral-messages.streamlit.app)  
 **Demo video:** _add your link_  
 **Demo video (2 min):** _add your link_
 
@@ -42,14 +42,17 @@ Both use the same OpenAI-compatible API, so nothing else changes between them.
 1. Push this folder to a public GitHub repo. `.gitignore` already keeps `.env` out.
 2. Create an app at [share.streamlit.io](https://share.streamlit.io) with `app.py` as the entry point, and choose
    Python 3.12 under Advanced settings.
-3. Under **Secrets**, add your key from [console.groq.com](https://console.groq.com/keys):
+3. Under **Secrets**, add your key from [console.groq.com](https://console.groq.com/keys). Secrets are TOML, not `.env`
+   format, so every value needs straight double quotes. Copy from
+   [.streamlit/secrets.toml.example](.streamlit/secrets.toml.example) to avoid "Invalid format: please enter valid TOML":
 
    ```toml
    GROQ_API_KEY = "your-key"
    WIKI_USER_AGENT = "ClaimChecker-student-project/1.0 (your GitHub repo URL)"
    ```
 
-4. Open the app and run one check before demo day, so that the models are already downloaded.
+4. Under **Sharing**, make the app public, or visitors (including examiners) are sent to a login page.
+5. Open the app and run one check before demo day, so that the models are already downloaded.
 
 ## How it works
 
