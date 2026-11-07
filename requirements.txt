@@ -1,8 +1,11 @@
-# On Streamlit Cloud (Linux, Python 3.12) install the CPU-only PyTorch wheel: the default build pulls in
-# gigabytes of CUDA libraries the app never uses. A pinned URL avoids adding the PyTorch index, which would
-# also supply outdated copies of other packages such as requests.
-torch @ https://download.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and python_version == "3.12"
+# On Streamlit Cloud (Linux, Python 3.12) install CPU-only PyTorch: the default build pulls in gigabytes of CUDA
+# libraries the app never uses. torch and torchvision must be a matching pair (EasyOCR needs torchvision), so both
+# are pinned to CPU wheels built for each other. Pinned URLs avoid adding the PyTorch index, which would also
+# supply outdated copies of other packages such as requests.
+torch @ https://download.pytorch.org/whl/cpu/torch-2.14.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and python_version == "3.12"
+torchvision @ https://download.pytorch.org/whl/cpu/torchvision-0.29.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and python_version == "3.12"
 torch ; sys_platform != "linux" or python_version != "3.12"
+torchvision ; sys_platform != "linux" or python_version != "3.12"
 transformers
 sentence-transformers
 sentencepiece
