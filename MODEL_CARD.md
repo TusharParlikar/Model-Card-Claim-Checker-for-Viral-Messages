@@ -6,7 +6,7 @@ This app combines existing models and does not train a new one. No fine-tuning w
 
 | Role | Model | Type | Licence |
 | --- | --- | --- | --- |
-| Claim extraction (hosted) | `llama-3.3-70b-versatile` on Groq | Generative, GPT-style transformer | Llama 3.3 Community License |
+| Claim extraction (hosted) | `openai/gpt-oss-120b` on Groq | Generative, GPT-style transformer | Apache 2.0 |
 | Claim extraction (local) | `qwen3:1.7b` on Ollama | Generative, GPT-style transformer | Apache 2.0 |
 | Verification | `cross-encoder/nli-deberta-v3-small` | Discriminative, BERT family | Apache 2.0 |
 | Evidence ranking and grounding | `sentence-transformers/all-MiniLM-L6-v2` | BERT-family sentence embeddings | Apache 2.0 |

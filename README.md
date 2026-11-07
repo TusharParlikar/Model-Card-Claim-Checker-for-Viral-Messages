@@ -104,7 +104,7 @@ If one source can't be reached, the check carries on with the other and says whi
 
 ### Unit II: GANs and LLMs
 
-- **Transformer LLM:** Llama 3.3 on Groq, or Qwen3 on Ollama.
+- **Transformer LLM:** gpt-oss-120b on Groq, or Qwen3 on Ollama.
 - **Fine-tuning vs prompt-based learning:** this project uses prompt-based learning. Few-shot examples raised recall
   from 81% to 100% with no training, data labelling or GPU. Fine-tuning would need a large labelled set of split
   messages, and it would tie the app to one model.

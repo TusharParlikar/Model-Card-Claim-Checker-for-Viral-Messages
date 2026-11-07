@@ -95,7 +95,8 @@ def llm_config():
         return {
             "provider": "groq",
             "url": "https://api.groq.com/openai/v1/chat/completions",
-            "model": os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+            # Groq retired llama-3.3-70b-versatile on 16 Aug 2026; gpt-oss-120b is its named replacement.
+            "model": os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
             "key": key,
         }
     return {
@@ -104,6 +105,23 @@ def llm_config():
         "model": os.getenv("OLLAMA_MODEL", "qwen3:1.7b"),
         "key": "ollama",
     }
+
+
+def parse_json_reply(content):
+    """The JSON object in a model's reply, ignoring <think> blocks and any text around the object."""
+    content = re.sub(r"<think>.*?</think>", "", content or "", flags=re.S)
+    start, end = content.find("{"), content.rfind("}")
+    if start == -1 or end < start:
+        raise ValueError("no JSON object in the reply")
+    return json.loads(content[start : end + 1])
+
+
+def api_error(response):
+    """Groq's own error message, so the app says why a request failed. The body never contains the key."""
+    try:
+        return response.json()["error"]["message"][:200]
+    except (ValueError, KeyError, TypeError, AttributeError):
+        return ""
 
 
 def chat_json(system, user):
@@ -117,15 +135,24 @@ def chat_json(system, user):
     }
     if cfg["provider"] == "ollama":
         payload["reasoning_effort"] = "none"  # small local models otherwise spend minutes thinking
+    elif cfg["model"].startswith("openai/gpt-oss"):
+        payload["reasoning_effort"] = "low"  # splitting claims needs little reasoning; keeps checks fast
+        payload["include_reasoning"] = False
+    headers = {"Authorization": f"Bearer {cfg['key']}"}
     try:
-        r = requests.post(cfg["url"], json=payload, timeout=300, headers={"Authorization": f"Bearer {cfg['key']}"})
+        r = requests.post(cfg["url"], json=payload, timeout=300, headers=headers)
+        if r.status_code == 400 and "response_format" in payload:
+            # Some models reject JSON mode; the prompt already asks for JSON, so retry without it.
+            payload.pop("response_format")
+            r = requests.post(cfg["url"], json=payload, timeout=300, headers=headers)
         r.raise_for_status()
-        content = r.json()["choices"][0]["message"]["content"]
-        return json.loads(re.sub(r"<think>.*?</think>", "", content, flags=re.S))
+        return parse_json_reply(r.json()["choices"][0]["message"]["content"])
     except requests.RequestException as e:
-        # Report status only: the exception text is shown in the UI and must never carry the key.
+        # Status and the provider's message only: the exception text is shown in the UI and must never carry the key.
         status = getattr(e.response, "status_code", "no response")
-        raise LLMError(f"{cfg['provider']} request failed ({status}) for model {cfg['model']}") from e
+        detail = api_error(e.response) if e.response is not None else ""
+        raise LLMError(f"{cfg['provider']} request failed ({status}) for model {cfg['model']}"
+                       + (f": {detail}" if detail else "")) from e
     except (KeyError, IndexError, ValueError) as e:
         raise LLMError(f"{cfg['provider']} returned an unreadable answer") from e
 

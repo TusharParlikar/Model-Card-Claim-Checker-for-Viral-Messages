@@ -69,6 +69,16 @@ else:
     raise AssertionError("expected an error when every source fails")
 checker.SOURCES.update(real_sources)
 
+# Replies from reasoning models may wrap the JSON in thinking or prose.
+assert checker.parse_json_reply('{"claims": ["a"]}') == {"claims": ["a"]}
+assert checker.parse_json_reply('<think>{"x": 1}</think>Here it is: {"claims": []} done.') == {"claims": []}
+try:
+    checker.parse_json_reply("no json here")
+except ValueError:
+    pass
+else:
+    raise AssertionError("expected ValueError for a reply without JSON")
+
 redacted = checker.redact("Call +91 98765 43210 or mail a.b@example.com by 1948")
 assert "98765" not in redacted and "example.com" not in redacted and "1948" in redacted
 
