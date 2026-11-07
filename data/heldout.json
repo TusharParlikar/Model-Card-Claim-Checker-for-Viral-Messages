@@ -1,0 +1,14 @@
+[
+  {"claim": "The Earth orbits the Sun.", "label": "supported"},
+  {"claim": "The Sun orbits the Earth.", "label": "refuted"},
+  {"claim": "Bats are blind.", "label": "refuted"},
+  {"claim": "Sharks are fish.", "label": "supported"},
+  {"claim": "The Eiffel Tower is located in Berlin.", "label": "refuted"},
+  {"claim": "Penicillin was discovered by Alexander Fleming.", "label": "supported"},
+  {"claim": "Vitamin C cures the common cold.", "label": "refuted"},
+  {"claim": "Cracking your knuckles causes arthritis.", "label": "refuted"},
+  {"claim": "The Taj Mahal is located in Agra.", "label": "supported"},
+  {"claim": "Microwave ovens make food radioactive.", "label": "refuted"},
+  {"claim": "Sachin Tendulkar is a cricketer.", "label": "supported"},
+  {"claim": "A local shop in Pune gives free phones to anyone who shares this post.", "label": "unverified"}
+]
