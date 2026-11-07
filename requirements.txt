@@ -1,0 +1,17 @@
+# On Streamlit Cloud (Linux, Python 3.12) install the CPU-only PyTorch wheel: the default build pulls in
+# gigabytes of CUDA libraries the app never uses. A pinned URL avoids adding the PyTorch index, which would
+# also supply outdated copies of other packages such as requests.
+torch @ https://download.pytorch.org/whl/cpu/torch-2.15.0%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl ; sys_platform == "linux" and python_version == "3.12"
+torch ; sys_platform != "linux" or python_version != "3.12"
+transformers
+sentence-transformers
+sentencepiece
+protobuf
+streamlit>=1.57
+altair
+pandas
+numpy
+pillow
+requests>=2.32
+python-dotenv
+easyocr
